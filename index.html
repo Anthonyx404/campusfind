@@ -1,0 +1,472 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CampusFind</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- LOGIN -->
+  <section class="screen active" id="loginScreen">
+
+    <div class="logo-area">
+
+      <div class="logo-circle"></div>
+
+      <h1>CampusFind</h1>
+
+      <p>Lost it? Find it here.</p>
+
+    </div>
+
+    <div class="form-area">
+
+      <label>Email or Student ID *</label>
+
+      <input type="text"
+             id="loginEmail"
+             placeholder="Enter email or ID"/>
+
+      <label>Password *</label>
+
+      <input type="password"
+             id="loginPassword"
+             placeholder="Enter password"/>
+
+      <button class="btn green-btn"
+              onclick="login()">
+        Log In
+      </button>
+
+      <button class="btn outline-btn"
+              onclick="showScreen('signupScreen')">
+        Sign Up
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- SIGNUP -->
+  <section class="screen" id="signupScreen">
+
+    <div class="top-title">
+      <h2>Create Account</h2>
+      <p>Join CampusFind today</p>
+    </div>
+
+    <div class="form-area">
+
+      <input type="text"
+             id="signupName"
+             placeholder="Full Name *"/>
+
+      <input type="text"
+             id="signupStudentId"
+             placeholder="Student ID *"/>
+
+      <input type="email"
+             id="signupEmail"
+             placeholder="School Email *"/>
+
+      <input type="text"
+             id="signupPhone"
+             placeholder="Phone Number *"/>
+
+      <input type="password"
+             id="signupPassword"
+             placeholder="Password *"/>
+
+      <button class="btn blue-btn"
+              onclick="createAccount()">
+        Create Account
+      </button>
+
+      <p class="switch-text">
+        Already have an account?
+        <span onclick="showScreen('loginScreen')">
+          Login
+        </span>
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- HOME -->
+  <section class="screen" id="homeScreen">
+
+    <div class="welcome-box">
+      <small>Welcome back,</small>
+      <h2 id="welcomeName">Student</h2>
+    </div>
+
+    <div class="action-grid">
+
+      <div class="action-card red-card"
+           onclick="showScreen('lostScreen')">
+
+        <div class="emoji"></div>
+
+        <h3>Report Lost</h3>
+
+      </div>
+
+      <div class="action-card green-card"
+           onclick="showScreen('foundScreen')">
+
+        <div class="emoji"></div>
+
+        <h3>Report Found</h3>
+
+      </div>
+
+    </div>
+
+    <div class="section-title">
+      <h3>Recent Reports</h3>
+    </div>
+
+    <div id="recentFeed"
+         class="fixed-feed"></div>
+
+    <div class="bottom-nav">
+
+      <button class="active-nav">
+        Home
+      </button>
+
+      <button onclick="showScreen('browseScreen')">
+        Search
+      </button>
+
+      <button onclick="showScreen('notificationScreen')">
+        Notifications
+      </button>
+
+      <button onclick="showScreen('profileScreen')">
+        Profile
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- REPORT LOST -->
+  <section class="screen" id="lostScreen">
+
+    <div class="page-header">
+
+      <button class="back-btn"
+              onclick="showScreen('homeScreen')">
+        ←
+      </button>
+
+      <h2 class="red-text">
+        Report Lost Item
+      </h2>
+
+    </div>
+
+    <div class="form-area compact-form">
+
+      <input type="text"
+             id="lostName"
+             placeholder="Item Name *"/>
+
+      <select id="lostCategory">
+        <option>Electronics</option>
+        <option>ID/Documents</option>
+        <option>Clothing</option>
+        <option>Accessories</option>
+        <option>Keys</option>
+      </select>
+
+      <input type="date"
+             id="lostDate"/>
+
+      <input type="text"
+             id="lostLocation"
+             placeholder="Location on Campus *"/>
+
+      <textarea id="lostDescription"
+                placeholder="Description *"></textarea>
+
+      <button class="btn red-btn"
+              onclick="submitLostItem()">
+        Submit Report
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- REPORT FOUND -->
+  <section class="screen" id="foundScreen">
+
+    <div class="page-header">
+
+      <button class="back-btn"
+              onclick="showScreen('homeScreen')">
+        ←
+      </button>
+
+      <h2 class="green-text">
+        Report Found Item
+      </h2>
+
+    </div>
+
+    <div class="form-area compact-form">
+
+      <input type="text"
+             id="foundName"
+             placeholder="Item Name *"/>
+
+      <select id="foundCategory">
+        <option>Electronics</option>
+        <option>ID/Documents</option>
+        <option>Clothing</option>
+        <option>Accessories</option>
+        <option>Keys</option>
+      </select>
+
+      <input type="date"
+             id="foundDate"/>
+
+      <input type="text"
+             id="foundLocation"
+             placeholder="Location on Campus *"/>
+
+      <textarea id="foundDescription"
+                placeholder="Description *"></textarea>
+
+      <button class="btn green-btn"
+              onclick="submitFoundItem()">
+        Submit Report
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- SEARCH -->
+  <section class="screen" id="browseScreen">
+
+    <div class="top-title">
+      <h2>Browse & Search</h2>
+    </div>
+
+    <input type="text"
+           id="searchInput"
+           class="search-input"
+           placeholder="Search items..."
+           onkeyup="filterItems()"/>
+
+    <div class="chips">
+
+      <button>All</button>
+      <button>Electronics</button>
+      <button>ID</button>
+      <button>Keys</button>
+
+    </div>
+
+    <div id="browseList"
+         class="browse-fixed"></div>
+
+    <div class="bottom-nav">
+
+      <button onclick="showScreen('homeScreen')">
+        Home
+      </button>
+
+      <button class="active-nav">
+        Search
+      </button>
+
+      <button onclick="showScreen('notificationScreen')">
+        Notifications
+      </button>
+
+      <button onclick="showScreen('profileScreen')">
+        Profile
+      </button>
+
+    </div>
+
+  </section>
+
+<!-- REPLACE THE ENTIRE DETAIL SCREEN SECTION -->
+
+<section class="screen" id="detailScreen">
+
+  <div class="page-header">
+
+    <button class="back-btn"
+            onclick="showScreen('browseScreen')">
+      ←
+    </button>
+
+    <h2>Item Details</h2>
+
+  </div>
+
+  <div id="detailContent"></div>
+
+  <button class="btn blue-btn"
+          onclick="showScreen('claimScreen')">
+    Claim It
+  </button>
+
+  <button class="btn outline-btn">
+    Message Finder
+  </button>
+
+</section>
+  <!-- REPLACE THE ENTIRE CLAIM SCREEN SECTION -->
+
+<section class="screen" id="claimScreen">
+
+  <div class="page-header">
+
+    <button class="back-btn"
+            onclick="showScreen('detailScreen')">
+      ←
+    </button>
+
+    <h2>Claim Verification</h2>
+
+  </div>
+
+  <div class="form-area compact-form">
+
+    <input type="text"
+           placeholder="What color is the item?"/>
+
+    <input type="text"
+           placeholder="What brand is the item?"/>
+
+    <button class="btn blue-btn"
+            onclick="showSuccess('Claim submitted successfully!')">
+      Submit Claim
+    </button>
+
+  </div>
+
+</section>
+
+  <!-- NOTIFICATIONS -->
+  <section class="screen"
+           id="notificationScreen">
+
+    <div class="top-title">
+      <h2>Notifications</h2>
+    </div>
+
+    <div id="notificationList"
+         class="notification-fixed"></div>
+
+    <div class="bottom-nav">
+
+      <button onclick="showScreen('homeScreen')">
+        Home
+      </button>
+
+      <button onclick="showScreen('browseScreen')">
+        Search
+      </button>
+
+      <button class="active-nav">
+        Notifications
+      </button>
+
+      <button onclick="showScreen('profileScreen')">
+        Profile
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- PROFILE -->
+  <section class="screen"
+           id="profileScreen">
+
+    <div class="profile-header">
+
+      <div class="avatar"></div>
+
+      <h2 id="profileName">
+        Student
+      </h2>
+
+      <p id="profileId">
+        ID: 20231234
+      </p>
+
+    </div>
+
+    <div class="profile-info">
+
+      <div class="info-card">
+        <strong>Name</strong>
+        <p id="profileFullName"></p>
+      </div>
+
+      <div class="info-card">
+        <strong>Email</strong>
+        <p id="profileEmail"></p>
+      </div>
+
+      <div class="info-card">
+        <strong>Phone</strong>
+        <p id="profilePhone"></p>
+      </div>
+
+    </div>
+
+    <button class="btn blue-btn">
+      Edit Profile
+    </button>
+
+    <button class="btn logout-btn"
+            onclick="logout()">
+      Log Out
+    </button>
+
+    <div class="bottom-nav">
+
+      <button onclick="showScreen('homeScreen')">
+        Home
+      </button>
+
+      <button onclick="showScreen('browseScreen')">
+        Search
+      </button>
+
+      <button onclick="showScreen('notificationScreen')">
+        Notifications
+      </button>
+
+      <button class="active-nav">
+        Profile
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
