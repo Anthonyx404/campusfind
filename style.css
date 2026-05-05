@@ -349,6 +349,14 @@ textarea{
   cursor:pointer;
 }
 
+.upload-label{
+  font-size:13px;
+  font-weight:bold;
+  color:#444;
+  display:block;
+  margin-bottom:8px;
+}
+
 #toast{
   position:absolute;
   top:50%;
