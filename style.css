@@ -372,3 +372,23 @@ textarea{
   z-index:9999;
   box-shadow:0 10px 30px rgba(0,0,0,0.25);
 }
+
+.message-box{
+  margin-top:20px;
+}
+
+.finder-info{
+  background:#f8fafc;
+  padding:16px;
+  border-radius:16px;
+  margin-bottom:18px;
+}
+
+.finder-info h3{
+  margin-bottom:6px;
+}
+
+.finder-info p{
+  color:#666;
+  font-size:14px;
+}

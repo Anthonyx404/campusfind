@@ -1,7 +1,7 @@
-// script.js
-
 const screens =
   document.querySelectorAll(".screen");
+
+let currentItemIndex = null;
 
 function showScreen(id){
 
@@ -217,7 +217,9 @@ function renderItems(){
   recentFeed.innerHTML = "";
   browseList.innerHTML = "";
 
-  items.forEach((item,index)=>{
+  items.slice().reverse().forEach((item,index)=>{
+
+    const realIndex = items.length - 1 - index;
 
     const statusClass =
       item.status === "LOST"
@@ -227,7 +229,7 @@ function renderItems(){
     const card = `
 
       <div class="item-card"
-           onclick="openDetail(${index})">
+           onclick="openDetail(${realIndex})">
 
         <div class="item-top">
 
@@ -270,6 +272,12 @@ function submitLostItem(){
   const name =
     document.getElementById("lostName").value;
 
+  const category =
+    document.getElementById("lostCategory").value;
+
+  const date =
+    document.getElementById("lostDate").value;
+
   const location =
     document.getElementById("lostLocation").value;
 
@@ -287,6 +295,19 @@ function submitLostItem(){
     return;
   }
 
+  items.push({
+    name,
+    category,
+    location,
+    date: date || "Today",
+    description,
+    finder:"Campus User",
+    status:"LOST",
+    color:"#ef4444"
+  });
+
+  renderItems();
+
   showSuccess(
     "Lost item submitted successfully!"
   );
@@ -298,6 +319,12 @@ function submitFoundItem(){
 
   const name =
     document.getElementById("foundName").value;
+
+  const category =
+    document.getElementById("foundCategory").value;
+
+  const date =
+    document.getElementById("foundDate").value;
 
   const location =
     document.getElementById("foundLocation").value;
@@ -315,6 +342,19 @@ function submitFoundItem(){
     );
     return;
   }
+
+  items.push({
+    name,
+    category,
+    location,
+    date: date || "Today",
+    description,
+    finder:"Campus User",
+    status:"FOUND",
+    color:"#16a34a"
+  });
+
+  renderItems();
 
   showSuccess(
     "Found item submitted successfully!"
@@ -351,6 +391,8 @@ function filterItems(){
 }
 
 function openDetail(index){
+
+  currentItemIndex = index;
 
   const item = items[index];
 
@@ -389,6 +431,41 @@ function openDetail(index){
 
       <br>
   `;
+
+  showScreen("detailScreen");
+}
+
+function openMessageFinder(){
+
+  if(currentItemIndex === null){
+    return;
+  }
+
+  const item = items[currentItemIndex];
+
+  document
+    .getElementById("finderInfo")
+    .innerHTML = `
+      <h3>${item.finder}</h3>
+      <p>Regarding: ${item.name}</p>
+    `;
+
+  showScreen("messageScreen");
+}
+
+function sendMessage(){
+
+  const message =
+    document.getElementById("messageText").value;
+
+  if(!message){
+    showError("Please type a message.");
+    return;
+  }
+
+  showSuccess("Message sent to finder!");
+
+  document.getElementById("messageText").value = "";
 
   showScreen("detailScreen");
 }

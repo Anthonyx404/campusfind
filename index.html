@@ -344,9 +344,40 @@
       Claim It
     </button>
 
-    <button class="btn outline-btn">
+    <button class="btn outline-btn"
+            onclick="openMessageFinder()">
       Message Finder
     </button>
+
+  </section>
+
+  <!-- MESSAGE FINDER -->
+  <section class="screen" id="messageScreen">
+
+    <div class="page-header">
+
+      <button class="back-btn"
+              onclick="showScreen('detailScreen')">
+        ←
+      </button>
+
+      <h2>Message Finder</h2>
+
+    </div>
+
+    <div class="message-box">
+
+      <div id="finderInfo" class="finder-info"></div>
+
+      <textarea id="messageText"
+                placeholder="Type your message here..."></textarea>
+
+      <button class="btn blue-btn"
+              onclick="sendMessage()">
+        Send Message
+      </button>
+
+    </div>
 
   </section>
 
